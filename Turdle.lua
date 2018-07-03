@@ -22,7 +22,7 @@ function TurtleSim.down()
 end
 
 function TurtleSim.forward()
-	print("I'm going forward!")
+--	print("I'm going forward!")
 	return true
 end
 
@@ -90,34 +90,37 @@ end
 
 function TurtleSim.inspect()
 	local coord = getBlockmapCoord("forward")
-	local worldBlock = {name="minecraft.stone"}
-	if	coord == "0:0:1" or
-		coord == "0:0:2" then
+	local worldBlock = {name="minecraft:stone"}
+	if	coord == "-1:0:1" or
+		coord == "-2:0:1" or
+		coord == "-1:1:1" then
 		worldBlock = {name="minecraft.awesomeOre"}
 	end
-	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	print("Performing a forward inspect on ", coord, " and returning ", worldBlock.name)
 	return true, worldBlock
 end
 
 function TurtleSim.inspectUp()
 	local coord = getBlockmapCoord("up")
-	local worldBlock = {name="minecraft.stone"}
-	if	coord == "0:0:1" or
-		coord == "0:0:2" then
+	local worldBlock = {name="minecraft:stone"}
+	if	coord == "-1:0:1" or
+		coord == "-2:0:1" or
+		coord == "-1:1:1" then
 		worldBlock = {name="minecraft.awesomeOre"}
 	end
-	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	print("Performing an up inspect on ", coord, " and returning ", worldBlock.name)
 	return true, worldBlock
 end
 
 function TurtleSim.inspectDown()
 	local coord = getBlockmapCoord("down")
-	local worldBlock = {name="minecraft.stone"}
-	if	coord == "0:0:1" or
-		coord == "0:0:2" then
+	local worldBlock = {name="minecraft:stone"}
+	if	coord == "-1:0:1" or
+		coord == "-2:0:1" or
+		coord == "-1:1:1" then
 		worldBlock = {name="minecraft.awesomeOre"}
 	end
---	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	print("Performing a down inspect on ", coord, " and returning ", worldBlock.name)
 	return true, worldBlock
 end
 
@@ -218,9 +221,7 @@ end
 	
 
 function MoveForward(times)
-	if times == nil then
-		times = 1
-	end
+	if times == nil then times = 1 end
 	if times < 0 then
 		times = times * -1
 		Turn(2)
@@ -318,7 +319,7 @@ function checkIfOre(dir)
 		TurnTo(3)
 		success, data = turtle.inspect()
 	end
-		
+	
 	if success then
 		if 	data.name ~= "minecraft:stone" and
 			data.name ~= "minecraft:grass" and
@@ -333,14 +334,9 @@ function checkIfOre(dir)
 			data.name ~= "minecraft:lava" and
 			data.name ~= "minecraft:water" then
 			oreTrue = true
-		else
-			oreTrue = false
-		end
-	else
-		oreTrue = false
-	end
-	
-	blockMap[getBlockmapCoord("forward")] = oreTrue
+		else oreTrue = false end
+	else oreTrue = false end
+		
 	return oreTrue
 end
 
@@ -351,15 +347,18 @@ function dfs(returnX, returnY, returnZ)
 	dfsCount = dfsCount + 1
 	for i = 0, 3 do 
 		if checkIfOre(i) then
+			blockMap[getBlockmapCoord("forward")] = false
 			MoveForward()
 			dfs(XCoord, YCoord, ZCoord)
 		end
 	end
 	if checkIfOre("up") then
+		blockMap[getBlockmapCoord("up")] = false
 		MoveVert(1)
 		dfs(XCoord, YCoord, ZCoord)
 	end
 	if checkIfOre("down") then
+		blockMap[getBlockmapCoord("down")] = false
 		MoveVert(-1)
 		dfs(XCoord, YCoord, ZCoord)
 	end
@@ -459,5 +458,5 @@ end
 
 
 initialFuel()
-searchForOres()
+--searchForOres()
 tunnel2x3()
