@@ -77,7 +77,7 @@ function TurtleSim.suck()
 end
 
 function TurtleSim.getFuelLevel()
-	return 0
+	return 1500
 end
 
 function TurtleSim.refuel()
@@ -86,6 +86,39 @@ end
 
 function TurtleSim.getItemCount()
 	return 0
+end
+
+function TurtleSim.inspect()
+	local coord = getBlockmapCoord("forward")
+	local worldBlock = {name="minecraft.stone"}
+	if	coord == "0:0:1" or
+		coord == "0:0:2" then
+		worldBlock = {name="minecraft.awesomeOre"}
+	end
+	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	return true, worldBlock
+end
+
+function TurtleSim.inspectUp()
+	local coord = getBlockmapCoord("up")
+	local worldBlock = {name="minecraft.stone"}
+	if	coord == "0:0:1" or
+		coord == "0:0:2" then
+		worldBlock = {name="minecraft.awesomeOre"}
+	end
+	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	return true, worldBlock
+end
+
+function TurtleSim.inspectDown()
+	local coord = getBlockmapCoord("down")
+	local worldBlock = {name="minecraft.stone"}
+	if	coord == "0:0:1" or
+		coord == "0:0:2" then
+		worldBlock = {name="minecraft.awesomeOre"}
+	end
+--	print("Performing an inspect on ", coord, " and returning ", worldBlock.name)
+	return true, worldBlock
 end
 
 function sleep()
