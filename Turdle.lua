@@ -193,8 +193,9 @@ function MoveForward(times)
 		Turn(2)
 	end
 	for i = 1, times do
-		if turtle.detect() then
+		while turtle.detect() do
 			turtle.dig()
+			sleep(0.5)
 		end
 		if turtle.forward() then
 			if Direction == 0 then
