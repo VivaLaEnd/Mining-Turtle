@@ -332,6 +332,8 @@ function checkIfOre(dir)
 			data.name ~= "minecraft:gravel" and
 			data.name ~= "minecraft:dirt" and
 			data.name ~= "minecraft:lava" and
+			data.name ~= "minecraft:flowing_lava" and
+			data.name ~= "minecraft:flowing_water" and
 			data.name ~= "minecraft:water" then
 			oreTrue = true
 		else oreTrue = false end
